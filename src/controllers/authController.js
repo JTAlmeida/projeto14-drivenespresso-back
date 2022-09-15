@@ -16,7 +16,7 @@ export async function userSignIn(req, res) {
 
     if (!thisUser || !validatePassword) {
       return res
-        .status(422)
+        .status(401)
         .send({ message: "Erro: email e/ou senha inválido(s)." });
     }
 
