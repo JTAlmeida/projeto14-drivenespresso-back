@@ -1,14 +1,22 @@
 import express from "express";
 import cors from "cors";
+
+import authRouter from "./routers/authRouter.js";
+import dotenv from "dotenv";
+
 import * as dotenv from 'dotenv'
 import db from "./database/db.js";
 import { STATUS_CODE } from "./enums/statusCode.js";
 import { COLLECTION } from "./enums/collections.js";
+
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+
+app.use(authRouter);
 
 app.get('/',async(req,res)=>{
   try{
@@ -32,6 +40,7 @@ app.post('/', async(req,res)=>{
 
 
 })
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}`);
