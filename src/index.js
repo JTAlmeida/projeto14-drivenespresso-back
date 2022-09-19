@@ -3,8 +3,6 @@ import cors from "cors";
 
 import authRouter from "./routers/authRouter.js";
 import dotenv from "dotenv";
-
-import * as dotenv from 'dotenv'
 import db from "./database/db.js";
 import { STATUS_CODE } from "./enums/statusCode.js";
 import { COLLECTION } from "./enums/collections.js";
@@ -28,17 +26,24 @@ app.get('/',async(req,res)=>{
 })
 
 app.post('/', async(req,res)=>{
-  console.log(req.body);
   const selectedProducts= req.body;
-  console.log(selectedProducts);
   try {
     await db.collection(COLLECTION.SELECTED_PRODUCTS).insertOne(selectedProducts);
     return res.sendStatus(STATUS_CODE.OK);
   } catch (error) {
     return res.sendStatus(STATUS_CODE.SERVER_ERROR);
   }
+});
 
-
+app.post('/payment',async (req,res)=>{
+  const purchaseInfo= req.body;
+  try {
+    await db.collection(COLLECTION.PURCHASE).insertOne(purchaseInfo);
+    return res.sendStatus(STATUS_CODE.OK);
+    
+  } catch (error) {
+    return res.sendStatus(STATUS_CODE.SERVER_ERROR);
+  }
 })
 
 
